@@ -11,9 +11,11 @@ Pod::Spec.new do |spec|
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.name         = "NSDK-Commerce"
   spec.version      = "1.0.0"
-  spec.summary      = "A short description of NSDK-Commerce."
+  spec.summary      = "A lightweight SDK for commerce flow"
   spec.description  = <<-DESC
-                   DESC
+  NSDK-Commerce provides commerce-related capabilities like in-app purchases, product displays,
+  and subscription management for iOS apps. It's designed to be modular and easy to integrate.
+DESC
 
   spec.homepage     = "https://github.com/rajasekhar-tolapu/CSDK"
 
@@ -24,10 +26,10 @@ Pod::Spec.new do |spec|
   spec.swift_version = "5.0"
 
 
-  spec.source       = { :git => "https://github.com/rajasekhar-tolapu/CSDK", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/rajasekhar-tolapu/CSDK.git", :tag => "#{spec.version}" }
 
 
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}"
+  spec.source_files  = "NSDK-Commerce/**/*.{swift,h,m}"
   spec.exclude_files = "Classes/Exclude"
 
  
