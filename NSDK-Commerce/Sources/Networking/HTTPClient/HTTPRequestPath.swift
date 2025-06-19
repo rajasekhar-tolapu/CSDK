@@ -101,13 +101,18 @@ extension HTTPRequest {
 
     }
 
+    enum WebBillingPath: Hashable {
+
+        case getWebProducts(appUserID: String)
+
+    }
+
 }
 
 extension HTTPRequest.Path: HTTPRequestPath {
 
     // swiftlint:disable:next force_unwrapping
-    static let serverHostURL = URL(string: "https://staging-revenuecat-api.nazarasdk.com/")!
-    //URL(string: "https://api.revenuecat.com")!
+    static let serverHostURL = URL(string: "https://api.revenuecat.com")!
 
     var fallbackHosts: [URL] {
         switch self {
@@ -205,19 +210,16 @@ extension HTTPRequest.Path: HTTPRequestPath {
     }
 
     var relativePath: String {
-        return "/\(self.pathComponent)"
-        //return "/v1/\(self.pathComponent)"
+        return "/v1/\(self.pathComponent)"
     }
 
     var pathComponent: String {
         switch self {
         case let .getCustomerInfo(appUserID):
-            return "api/subscriptions/customers/\(Self.escape(appUserID))"
-            //return "subscribers/\(Self.escape(appUserID))"
+            return "subscribers/\(Self.escape(appUserID))"
 
         case let .getOfferings(appUserID):
-            return "api/subscriptions/offerings/\(Self.escape(appUserID))"
-            //return "subscribers/\(Self.escape(appUserID))/offerings"
+            return "subscribers/\(Self.escape(appUserID))/offerings"
 
         case let .getIntroEligibility(appUserID):
             return "subscribers/\(Self.escape(appUserID))/intro_eligibility"
@@ -226,8 +228,7 @@ extension HTTPRequest.Path: HTTPRequestPath {
             return "subscribers/\(Self.escape(appUserID))/health_report"
 
         case .logIn:
-            return "api/subscriptions/login"
-            //return "subscribers/identify"
+            return "subscribers/identify"
 
         case let .postAttributionData(appUserID):
             return "subscribers/\(Self.escape(appUserID))/attribution"
@@ -239,8 +240,7 @@ extension HTTPRequest.Path: HTTPRequestPath {
             return "offers"
 
         case .postReceiptData:
-            return "api/subscriptions/makePurchase"
-            //return "receipts"
+            return "receipts"
 
         case let .postSubscriberAttributes(appUserID):
             return "subscribers/\(Self.escape(appUserID))/attributes"

@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.name         = "NSDK-Commerce"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "A lightweight SDK for commerce flow"
   spec.description  = <<-DESC
   NSDK-Commerce provides commerce-related capabilities like in-app purchases, product displays,

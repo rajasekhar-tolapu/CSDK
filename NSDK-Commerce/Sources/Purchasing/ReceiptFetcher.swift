@@ -118,7 +118,6 @@ extension ReceiptFetcher {
 // - Class is not `final` (it's mocked). This implicitly makes subclasses `Sendable` even if they're not thread-safe.
 extension ReceiptFetcher: @unchecked Sendable {}
 
-// Commented Due to invalid redeclaration
 //extension PurchasesReceiptParser {
 //
 //    /// A default instance of ``PurchasesReceiptParser``

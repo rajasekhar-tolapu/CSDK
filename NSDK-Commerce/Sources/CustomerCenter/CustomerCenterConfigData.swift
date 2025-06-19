@@ -16,23 +16,25 @@
 import Foundation
 
 // swiftlint:disable missing_docs nesting file_length type_body_length
-public typealias RCColor = PaywallColor
+@_spi(Internal) public typealias RCColor = PaywallColor
 
-public struct CustomerCenterConfigData: Equatable {
+@_spi(Internal) public struct CustomerCenterConfigData: Equatable {
 
-    public let screens: [Screen.ScreenType: Screen]
-    public let appearance: Appearance
-    public let localization: Localization
-    public let support: Support
-    public let lastPublishedAppVersion: String?
-    public let productId: UInt?
+    @_spi(Internal) public let screens: [Screen.ScreenType: Screen]
+    @_spi(Internal) public let appearance: Appearance
+    @_spi(Internal) public let localization: Localization
+    @_spi(Internal) public let support: Support
+    @_spi(Internal) public let lastPublishedAppVersion: String?
+    @_spi(Internal) public let productId: UInt?
 
-    public init(screens: [Screen.ScreenType: Screen],
-                appearance: Appearance,
-                localization: Localization,
-                support: Support,
-                lastPublishedAppVersion: String?,
-                productId: UInt?) {
+    @_spi(Internal) public init(
+        screens: [Screen.ScreenType: Screen],
+        appearance: Appearance,
+        localization: Localization,
+        support: Support,
+        lastPublishedAppVersion: String?,
+        productId: UInt?
+    ) {
         self.screens = screens
         self.appearance = appearance
         self.localization = localization
@@ -41,17 +43,17 @@ public struct CustomerCenterConfigData: Equatable {
         self.productId = productId
     }
 
-    public struct Localization: Equatable {
+    @_spi(Internal) public struct Localization: Equatable {
 
         let locale: String
         let localizedStrings: [String: String]
 
-        public init(locale: String, localizedStrings: [String: String]) {
+        @_spi(Internal) public init(locale: String, localizedStrings: [String: String]) {
             self.locale = locale
             self.localizedStrings = localizedStrings
         }
 
-        public enum CommonLocalizedString: String, Equatable {
+        @_spi(Internal) public enum CommonLocalizedString: String, Equatable {
 
             case copy = "copy"
             case noThanks = "no_thanks"
@@ -119,6 +121,7 @@ public struct CustomerCenterConfigData: Equatable {
             case productName = "product_name"
             case paidPrice = "paid_price"
             case originalDownloadDate = "original_download_date"
+            case historyLatestPurchaseDate = "history_latest_purchase_date"
             case status = "status"
             case nextRenewalDate = "next_renewal"
             case unsubscribedAt = "unsubscribed_at"
@@ -138,12 +141,30 @@ public struct CustomerCenterConfigData: Equatable {
             case storeStripe = "store_stripe"
             case storePromotional = "store_promotional"
             case storeAmazon = "store_amazon_store"
+            case cardStorePromotional = "card_store_promotional"
             case storeRCBilling = "store_web"
             case storeExternal = "store_external"
             case storeUnknownStore = "store_unknown"
+            case storePaddle = "store_paddle"
             case debugHeaderTitle = "Debug"
+            case youMayHaveDuplicatedSubscriptionsTitle = "you_may_have_duplicated_subscriptions_title"
+            case youMayHaveDuplicatedSubscriptionsSubtitle = "you_may_have_duplicated_subscriptions_subtitle"
+            case pricePaid = "price_paid"
+            case expiresOnDateWithoutChanges = "expires_on_date_without_changes"
+            case renewsOnDateForPrice = "renews_on_date_for_price"
+            case renewsOnDate = "renews_on_date"
+            case priceAfterwards = "price_afterwards"
+            case freeTrialUntilDate = "free_trial_until_date"
+            case priceExpiresOnDateWithoutChanges = "price_expires_on_date_without_changes"
+            case badgeCancelled = "badge_cancelled"
+            case badgeTrialCancelled = "badge_free_trial_cancelled"
+            case badgeFreeTrial = "free_trial"
+            case refundSuccess = "refund_success"
+            case actionsSectionTitle = "actions_section_title"
+            case subscriptionsSectionTitle = "subscriptions_section_title"
+            case purchasesSectionTitle = "purchases_section_title"
 
-            var defaultValue: String {
+            @_spi(Internal) public var defaultValue: String {
                 switch self {
                 case .copy:
                     return "Copy"
@@ -281,6 +302,8 @@ public struct CustomerCenterConfigData: Equatable {
                     return "Paid Price"
                 case .originalDownloadDate:
                     return "Original Download Date"
+                case .historyLatestPurchaseDate:
+                    return "Latest Purchase Date"
                 case .status:
                     return "Status"
                 case .nextRenewalDate:
@@ -319,40 +342,79 @@ public struct CustomerCenterConfigData: Equatable {
                     return "Promotional"
                 case .storeAmazon:
                     return "Amazon Store"
+                case .cardStorePromotional:
+                    return "Via Support"
                 case .storeRCBilling:
                     return "Web"
                 case .storeExternal:
                     return "External Purchases"
                 case .storeUnknownStore:
                     return "Unknown Store"
+                case .storePaddle:
+                    return "Paddle"
                 case .debugHeaderTitle:
                     return "Debug"
+                case .youMayHaveDuplicatedSubscriptionsTitle:
+                    return "You may have duplicated subscriptions"
+                case .youMayHaveDuplicatedSubscriptionsSubtitle:
+                    return "You might be subscribed both on the web and through the App Store." +
+                        "To avoid being charged twice, please cancel your iOS subscription in your device settings."
+                case .pricePaid:
+                    return "Paid {{ price }}."
+                case .expiresOnDateWithoutChanges:
+                    return "Expires on {{ date }} without further charges."
+                case .renewsOnDateForPrice:
+                    return "Renews on {{ date }} for {{ price }}."
+                case .renewsOnDate:
+                    return "Renews on {{ date }}."
+                case .priceAfterwards:
+                    return "{{ price }} afterwards."
+                case .freeTrialUntilDate:
+                    return "Free trial until {{ date }}."
+                case .priceExpiresOnDateWithoutChanges:
+                     return "{{ price }}. Expires on {{ date }} without changes."
+                case .badgeCancelled:
+                    return "Cancelled"
+                case .badgeFreeTrial:
+                    return "Free trial"
+                case .badgeTrialCancelled:
+                    return "Cancelled trial"
+                case .refundSuccess:
+                    return "Apple has received the refund request"
+                case .actionsSectionTitle:
+                    return "Actions"
+                case .subscriptionsSectionTitle:
+                    return "Subscriptions"
+                case .purchasesSectionTitle:
+                    return "Purchases"
                 }
             }
         }
 
-        public subscript(_ key: CommonLocalizedString) -> String {
+        @_spi(Internal) public subscript(_ key: CommonLocalizedString) -> String {
             localizedStrings[key.rawValue] ?? key.defaultValue
         }
     }
 
-    public struct HelpPath: Equatable {
+    @_spi(Internal) public struct HelpPath: Equatable {
 
-        public let id: String
-        public let title: String
-        public let url: URL?
-        public let openMethod: OpenMethod?
-        public let type: PathType
-        public let detail: PathDetail?
-        public let refundWindowDuration: RefundWindowDuration?
+        @_spi(Internal) public let id: String
+        @_spi(Internal) public let title: String
+        @_spi(Internal) public let url: URL?
+        @_spi(Internal) public let openMethod: OpenMethod?
+        @_spi(Internal) public let type: PathType
+        @_spi(Internal) public let detail: PathDetail?
+        @_spi(Internal) public let refundWindowDuration: RefundWindowDuration?
 
-        public init(id: String,
-                    title: String,
-                    url: URL? = nil,
-                    openMethod: OpenMethod? = nil,
-                    type: PathType,
-                    detail: PathDetail?,
-                    refundWindowDuration: RefundWindowDuration? = nil) {
+        @_spi(Internal) public init(
+            id: String,
+            title: String,
+            url: URL? = nil,
+            openMethod: OpenMethod? = nil,
+            type: PathType,
+            detail: PathDetail?,
+            refundWindowDuration: RefundWindowDuration? = nil
+        ) {
             self.id = id
             self.title = title
             self.url = url
@@ -362,19 +424,19 @@ public struct CustomerCenterConfigData: Equatable {
             self.refundWindowDuration = refundWindowDuration
         }
 
-        public enum PathDetail: Equatable {
+        @_spi(Internal) public enum PathDetail: Equatable {
 
             case promotionalOffer(PromotionalOffer)
             case feedbackSurvey(FeedbackSurvey)
 
         }
 
-        public enum RefundWindowDuration: Equatable {
+        @_spi(Internal) public enum RefundWindowDuration: Equatable {
             case forever
             case duration(ISODuration)
         }
 
-        public enum PathType: String, Equatable {
+        @_spi(Internal) public enum PathType: String, Equatable {
 
             case missingPurchase = "MISSING_PURCHASE"
             case refundRequest = "REFUND_REQUEST"
@@ -402,7 +464,7 @@ public struct CustomerCenterConfigData: Equatable {
 
         }
 
-        public enum OpenMethod: String, Equatable {
+        @_spi(Internal) public enum OpenMethod: String, Equatable {
 
             case inApp = "IN_APP"
             case external = "EXTERNAL"
@@ -420,39 +482,56 @@ public struct CustomerCenterConfigData: Equatable {
 
         }
 
-        public struct PromotionalOffer: Equatable {
+        @_spi(Internal) public struct PromotionalOffer: Equatable {
 
-            public let iosOfferId: String
-            public let eligible: Bool
-            public let title: String
-            public let subtitle: String
-            public let productMapping: [String: String]
+            @_spi(Internal) public let iosOfferId: String
+            @_spi(Internal) public let eligible: Bool
+            @_spi(Internal) public let title: String
+            @_spi(Internal) public let subtitle: String
+            @_spi(Internal) public let productMapping: [String: String]
+            @_spi(Internal) public let crossProductPromotions: [String: CrossProductPromotion]
 
-            public init(iosOfferId: String,
-                        eligible: Bool,
-                        title: String,
-                        subtitle: String,
-                        productMapping: [String: String]) {
+            @_spi(Internal) public struct CrossProductPromotion: Equatable {
+                @_spi(Internal) public let storeOfferIdentifier: String
+                @_spi(Internal) public let targetProductId: String
+
+                @_spi(Internal) public init(
+                    storeofferingidentifier: String,
+                    targetproductid: String
+                ) {
+                    self.storeOfferIdentifier = storeofferingidentifier
+                    self.targetProductId = targetproductid
+                }
+            }
+
+            @_spi(Internal) public init(
+                iosOfferId: String,
+                eligible: Bool,
+                title: String,
+                subtitle: String,
+                productMapping: [String: String],
+                crossProductPromotions: [String: CrossProductPromotion] = [:]
+            ) {
                 self.iosOfferId = iosOfferId
                 self.eligible = eligible
                 self.title = title
                 self.subtitle = subtitle
                 self.productMapping = productMapping
+                self.crossProductPromotions = crossProductPromotions
             }
-
         }
 
-        public struct FeedbackSurvey: Equatable {
+        @_spi(Internal) public struct FeedbackSurvey: Equatable {
 
-            public let title: String
-            public let options: [Option]
+            @_spi(Internal) public let title: String
+            @_spi(Internal) public let options: [Option]
 
-            public init(title: String, options: [Option]) {
+            @_spi(Internal) public init(title: String, options: [Option]) {
                 self.title = title
                 self.options = options
             }
 
-            public struct Option: Equatable {
+            @_spi(Internal) public struct Option: Equatable {
 
                 public let id: String
                 public let title: String
@@ -470,19 +549,21 @@ public struct CustomerCenterConfigData: Equatable {
 
     }
 
-    public struct Appearance: Equatable {
+    @_spi(Internal) public struct Appearance: Equatable {
 
-        public let accentColor: ColorInformation
-        public let textColor: ColorInformation
-        public let backgroundColor: ColorInformation
-        public let buttonTextColor: ColorInformation
-        public let buttonBackgroundColor: ColorInformation
+        @_spi(Internal) public let accentColor: ColorInformation
+        @_spi(Internal) public let textColor: ColorInformation
+        @_spi(Internal) public let backgroundColor: ColorInformation
+        @_spi(Internal) public let buttonTextColor: ColorInformation
+        @_spi(Internal) public let buttonBackgroundColor: ColorInformation
 
-        public init(accentColor: ColorInformation,
-                    textColor: ColorInformation,
-                    backgroundColor: ColorInformation,
-                    buttonTextColor: ColorInformation,
-                    buttonBackgroundColor: ColorInformation) {
+        @_spi(Internal) public init(
+            accentColor: ColorInformation,
+            textColor: ColorInformation,
+            backgroundColor: ColorInformation,
+            buttonTextColor: ColorInformation,
+            buttonBackgroundColor: ColorInformation
+        ) {
             self.accentColor = accentColor
             self.textColor = textColor
             self.backgroundColor = backgroundColor
@@ -490,17 +571,17 @@ public struct CustomerCenterConfigData: Equatable {
             self.buttonBackgroundColor = buttonBackgroundColor
         }
 
-        public struct ColorInformation: Equatable {
+        @_spi(Internal) public struct ColorInformation: Equatable {
 
-            public var light: RCColor?
-            public var dark: RCColor?
+            @_spi(Internal) public var light: RCColor?
+            @_spi(Internal) public var dark: RCColor?
 
-            public init() {
+            @_spi(Internal) public init() {
                 self.light = nil
                 self.dark = nil
             }
 
-            public init(
+            @_spi(Internal) public init(
                 light: String?,
                 dark: String?
             ) {
@@ -523,21 +604,21 @@ public struct CustomerCenterConfigData: Equatable {
 
     }
 
-    public struct Screen: Equatable {
+    @_spi(Internal) public struct Screen: Equatable {
 
-        public let type: ScreenType
-        public let title: String
-        public let subtitle: String?
-        public let paths: [HelpPath]
+        @_spi(Internal) public let type: ScreenType
+        @_spi(Internal) public let title: String
+        @_spi(Internal) public let subtitle: String?
+        @_spi(Internal) public let paths: [HelpPath]
 
-        public init(type: ScreenType, title: String, subtitle: String?, paths: [HelpPath]) {
+        @_spi(Internal) public init(type: ScreenType, title: String, subtitle: String?, paths: [HelpPath]) {
             self.type = type
             self.title = title
             self.subtitle = subtitle
             self.paths = paths
         }
 
-        public enum ScreenType: String, Equatable {
+        @_spi(Internal) public enum ScreenType: String, Equatable {
             case management = "MANAGEMENT"
             case noActive = "NO_ACTIVE"
             case unknown
@@ -556,20 +637,23 @@ public struct CustomerCenterConfigData: Equatable {
 
     }
 
-    public struct Support: Equatable {
+    @_spi(Internal) public struct Support: Equatable {
 
-        public let email: String
-        public let shouldWarnCustomerToUpdate: Bool
-        public let displayPurchaseHistoryLink: Bool
+        @_spi(Internal) public let email: String
+        @_spi(Internal) public let shouldWarnCustomerToUpdate: Bool
+        @_spi(Internal) public let displayPurchaseHistoryLink: Bool
+        @_spi(Internal) public let shouldWarnCustomersAboutMultipleSubscriptions: Bool
 
-        public init(
+        @_spi(Internal) public init(
             email: String,
             shouldWarnCustomerToUpdate: Bool,
-            displayPurchaseHistoryLink: Bool
+            displayPurchaseHistoryLink: Bool,
+            shouldWarnCustomersAboutMultipleSubscriptions: Bool
         ) {
             self.email = email
             self.shouldWarnCustomerToUpdate = shouldWarnCustomerToUpdate
             self.displayPurchaseHistoryLink = displayPurchaseHistoryLink
+            self.shouldWarnCustomersAboutMultipleSubscriptions = shouldWarnCustomersAboutMultipleSubscriptions
         }
 
     }
@@ -680,6 +764,17 @@ extension CustomerCenterConfigData.HelpPath.PromotionalOffer {
         self.title = response.title
         self.subtitle = response.subtitle
         self.productMapping = response.productMapping
+        self.crossProductPromotions = response.crossProductPromotions?.mapValues { CrossProductPromotion(from: $0) }
+            ?? [:]
+    }
+
+}
+
+extension CustomerCenterConfigData.HelpPath.PromotionalOffer.CrossProductPromotion {
+
+    init(from response: CustomerCenterConfigResponse.HelpPath.PromotionalOffer.CrossProductPromotion) {
+        self.storeOfferIdentifier = response.storeOfferIdentifier
+        self.targetProductId = response.targetProductId
     }
 
 }
@@ -714,6 +809,8 @@ extension CustomerCenterConfigData.Support {
         self.email = response.email
         self.shouldWarnCustomerToUpdate = response.shouldWarnCustomerToUpdate ?? true
         self.displayPurchaseHistoryLink = response.displayPurchaseHistoryLink ?? false
+        self.shouldWarnCustomersAboutMultipleSubscriptions = response.shouldWarnCustomersAboutMultipleSubscriptions
+            ?? false
     }
 
 }
